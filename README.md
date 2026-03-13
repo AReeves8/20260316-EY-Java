@@ -1,1 +1,1 @@
-Code examples from the 20260316 Ey Java training. 
+Code examples from the 20260316 EY Java training. 
