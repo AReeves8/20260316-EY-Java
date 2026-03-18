@@ -1,0 +1,21 @@
+=== VALID PRODUCTS ===
+Product[name=Laptop Pro 15, sku=LPRO-001, price=1299.99, quantity=25, category=Electronics]
+Product[name=Wireless Mouse, sku=WMOU-002, price=29.99, quantity=150, category=Electronics]
+Product[name=Mechanical Keyboard, sku=MKBD-003, price=89.99, quantity=75, category=Electronics]
+Product[name=USB-C Hub, sku=USBC-006, price=49.99, quantity=-5, category=Accessories]
+Product[name=Laptop Pro 15, sku=LPRO-001, price=999.99, quantity=10, category=Electronics]
+Product[name=Webcam HD, sku=WCAM-008, price=79.99, quantity=40, category=Electronics]
+Product[name=Headphones Pro, sku=HEAD-010, price=199.99, quantity=85, category=Electronics]
+Product[name=Greek Yogurt 500g, sku=YOGT-011, price=2.49, quantity=500, category=Food]
+Product[name=Office Chair, sku=CHRR-012, price=349.99, quantity=12, category=Furniture]
+
+
+=== ERRORS ===
+4: Name cannot be blank.
+,EMPTY-004,19.99,10,Accessories
+5: Price is invalid number.
+Monitor 27",MNTR-005,,30,Electronics
+8: Number of fields is incorrect.
+COMPLETELY WRONG ROW WITH NO COMMAS AT ALL
+10: Price is invalid number.
+Standing Desk,SDSK-009,not-a-number,5,Furniture

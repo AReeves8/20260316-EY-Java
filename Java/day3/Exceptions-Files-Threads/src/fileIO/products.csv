@@ -1,0 +1,14 @@
+name,sku,price,quantity,category
+Laptop Pro 15,LPRO-001,1299.99,25,Electronics
+Wireless Mouse,WMOU-002,29.99,150,Electronics
+Mechanical Keyboard,MKBD-003,89.99,75,Electronics
+,EMPTY-004,19.99,10,Accessories
+Monitor 27",MNTR-005,,30,Electronics
+USB-C Hub,USBC-006,49.99,-5,Accessories
+Laptop Pro 15,LPRO-001,999.99,10,Electronics
+COMPLETELY WRONG ROW WITH NO COMMAS AT ALL
+Webcam HD,WCAM-008,79.99,40,Electronics
+Standing Desk,SDSK-009,not-a-number,5,Furniture
+Headphones Pro,HEAD-010,199.99,85,Electronics
+Greek Yogurt 500g,YOGT-011,2.49,500,Food
+Office Chair,CHRR-012,349.99,12,Furniture
