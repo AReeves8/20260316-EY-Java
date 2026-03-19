@@ -1,0 +1,17 @@
+=== VALID PRODUCTS ===
+ProductRecord[name=Laptop Pro 15, sku=LPRO-001, price=1299.99, quantity=25, category=Electronics]
+ProductRecord[name=Wireless Mouse, sku=WMOU-002, price=29.99, quantity=150, category=Electronics]
+ProductRecord[name=Mechanical Keyboard, sku=MKBD-003, price=89.99, quantity=75, category=Electronics]
+ProductRecord[name=USB-C Hub, sku=USBC-006, price=49.99, quantity=-5, category=Accessories]
+ProductRecord[name=Laptop Pro 15, sku=LPRO-001, price=999.99, quantity=10, category=Electronics]
+ProductRecord[name=Webcam HD, sku=WCAM-008, price=79.99, quantity=40, category=Electronics]
+ProductRecord[name=Headphones Pro, sku=HEAD-010, price=199.99, quantity=85, category=Electronics]
+ProductRecord[name=Greek Yogurt 500g, sku=YOGT-011, price=2.49, quantity=500, category=Food]
+ProductRecord[name=Office Chair, sku=CHRR-012, price=349.99, quantity=12, category=Furniture]
+
+
+=== ERRORS ===
+,EMPTY-004,19.99,10,Accessories
+Monitor 27",MNTR-005,,30,Electronics
+COMPLETELY WRONG ROW WITH NO COMMAS AT ALL
+Standing Desk,SDSK-009,not-a-number,5,Furniture
