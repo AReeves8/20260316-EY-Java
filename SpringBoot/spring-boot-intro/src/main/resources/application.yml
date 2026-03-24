@@ -1,0 +1,30 @@
+# application.properties/.yml is your project config file
+#       can either be .properties or .yml - but NEEDS to be named application in src/main/resources
+#
+#       here you can specify any properties your project will use
+#           if your project environment changes, these properties can stay the same
+
+
+# you don't need to apecifiy these things, just an example of how this file works
+spring:
+    application:
+        name: spring-boot-intro
+        admin:
+            enabled: false      # default value; lets you enable admin privileges for your project
+
+    config: 
+        name: application       # default value; change the name of your config file
+    
+    output:
+        ansi:
+            enabled: ALWAYS     # lets your VS Code terminal dispay colors when running your spring app
+
+server:
+  port: 8282                    # default - 8080, changes port your app will run on
+
+
+# spring.application.name=spring-boot-intro
+# spring.application.admin.enabled=false
+# spring.config.name=application
+# spring.output.ansi.enabled=ALWAYS
+# server.port=8282

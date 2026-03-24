@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>3.5.12</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+	<groupId>com.skillstorm</groupId>
+	<artifactId>spring-boot-intro</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>spring-boot-intro</name>
+	<description/>
+	<url/>
+	<licenses>
+		<license/>
+	</licenses>
+	<developers>
+		<developer/>
+	</developers>
+	<scm>
+		<connection/>
+		<developerConnection/>
+		<tag/>
+		<url/>
+	</scm>
+
+	<!-- java version -->
+	<properties>
+		<java.version>21</java.version>
+	</properties>
+
+
+	<!-- project dependencies -->
+	<dependencies>
+		
+		<!-- "starter" dependencies have the opinionated configurations -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+	</dependencies>
+
+	<build>
+		<plugins>
+
+
+			<!--
+				allow maven to package spring boot projects
+					maven will package project into a Fat JAR
+						it is a JAR that also contains all the dependencies, tools, and code
+
+				you don't need this plugin if you package as a WAR
+					WAR is used when you have some external web server that you need this project to run on. 
+						when we use Spring MVC - this will include an embedded Web Server in our project
+							- this will be packaged up as one of our tools in the Fat JAR
+			-->
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
