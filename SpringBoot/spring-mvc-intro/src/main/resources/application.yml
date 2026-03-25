@@ -1,0 +1,8 @@
+spring:
+    output:
+        ansi:
+            enabled: ALWAYS     # enable terminal colors in VS Code
+
+# if you want, you can change the port your server runs on (default is 8080)
+server:
+    port: 8282
