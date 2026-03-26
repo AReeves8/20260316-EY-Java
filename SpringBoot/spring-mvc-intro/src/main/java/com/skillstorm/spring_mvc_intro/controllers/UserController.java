@@ -2,6 +2,7 @@ package com.skillstorm.spring_mvc_intro.controllers;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import com.skillstorm.spring_mvc_intro.dtos.UserDTO;
 import com.skillstorm.spring_mvc_intro.models.User;
 import com.skillstorm.spring_mvc_intro.services.UserService;
 
@@ -62,7 +63,7 @@ public class UserController {
      * GET /api/v1/users
      */
     @GetMapping
-    public List<User> getAllUsers() {
+    public List<UserDTO> getAllUsers() {
         return userService.getAllUsers();   // returned Java objects will be converted to JSON using Jackson
     }
 
@@ -71,7 +72,7 @@ public class UserController {
      *      - curly braces create a variable that can be anything
      */
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable(name = "id") long userId) {
+    public ResponseEntity<UserDTO> getUserById(@PathVariable(name = "id") long userId) {
 
         /**
          * @PathVariable retrieves a corresponding variable out of the URL path of the request
@@ -79,8 +80,8 @@ public class UserController {
          */
 
         try {
-            User user = userService.getUserById(userId);
-            return new ResponseEntity<User>(user, HttpStatus.OK);   // returns user data with a 200 status code
+            UserDTO user = userService.getUserById(userId);
+            return new ResponseEntity<UserDTO>(user, HttpStatus.OK);   // returns user data with a 200 status code
         } catch(IllegalArgumentException exception) {
 
             // WARNING: be careful sending error messages to frontend to avoid giving sensitive details away
@@ -102,7 +103,7 @@ public class UserController {
      *          - query params are separated by &
      */
     @GetMapping("/name")
-    public ResponseEntity<List<User>> getUserByName(
+    public ResponseEntity<List<UserDTO>> getUserByName(
         @RequestParam(name = "first-name") String firstName,
         @RequestParam(name = "last-name") String lastName
     ) {
@@ -113,8 +114,8 @@ public class UserController {
          */
 
         try {
-            List<User> users = userService.getUsersByName(firstName, lastName);
-            return new ResponseEntity<List<User>>(users, HttpStatus.OK);   // returns user data with a 200 status code
+            List<UserDTO> users = userService.getUsersByName(firstName, lastName);
+            return new ResponseEntity<List<UserDTO>>(users, HttpStatus.OK);   // returns user data with a 200 status code
         } catch(NameNotFoundException exception) {
             return ResponseEntity.notFound().header("message", exception.getMessage()).build();     // returns no data and a 404 status code
             
@@ -128,8 +129,8 @@ public class UserController {
      * POST /api/v1/users
      */
     @PostMapping
-    public ResponseEntity<User> createNewUser(@RequestBody User user) {
-    
+    public ResponseEntity<UserDTO> createNewUser(@RequestBody User user) {
+
         /**
          * @RequestBody takes the JSON data in the body of the request and maps it to the specified object
          *      - if no matching properties are found, object will be null
@@ -137,8 +138,8 @@ public class UserController {
          */
 
         try {
-            User newUser = userService.createUser(user);
-            return new ResponseEntity<User>(newUser, HttpStatus.CREATED);   // returns user data with a 201 status code
+            UserDTO newUser = userService.createUser(user);
+            return new ResponseEntity<UserDTO>(newUser, HttpStatus.CREATED);   // returns user data with a 201 status code
         } catch(Exception exception) {
             // this means something we didn't anticipate went wrong
             return ResponseEntity.internalServerError().header("message", "Oops. Something went wrong.").build(); // returns a 500
@@ -149,10 +150,10 @@ public class UserController {
      * PUT /api/v1/users/{id}
      */
     @PutMapping("/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable long id, @RequestBody User newUserInfo) {
+    public ResponseEntity<UserDTO> updateUser(@PathVariable long id, @RequestBody User newUserInfo) {
         try {
-            User newUser = userService.updateUser(id, newUserInfo);
-            return new ResponseEntity<User>(newUser, HttpStatus.OK);   // returns user data with a 200 status code
+            UserDTO newUser = userService.updateUser(id, newUserInfo);
+            return new ResponseEntity<UserDTO>(newUser, HttpStatus.OK);   // returns user data with a 200 status code
         } catch(IllegalArgumentException exception) {
             return ResponseEntity.badRequest().header("message", exception.getMessage()).build();   // returns no data and a 400 status code
         } catch(Exception exception) {

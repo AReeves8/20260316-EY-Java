@@ -7,6 +7,7 @@ import javax.naming.NameNotFoundException;
 
 import org.springframework.stereotype.Service;
 
+import com.skillstorm.spring_mvc_intro.dtos.UserDTO;
 import com.skillstorm.spring_mvc_intro.models.User;
 
 //import com.skillstorm.spring_mvc_intro.repositories.UserRepository;
@@ -24,17 +25,17 @@ public class UserService {
     //     this.userRepository = userRepository;
     // }
 
-    public List<User> getAllUsers() {
+    public List<UserDTO> getAllUsers() {
 
         // simulating calling the database to return a list of all the users
         List<User> users = new LinkedList<>();
         users.add(new User(1, "Austin", "Reeves", "areeves@skillstorm.com", "password@123"));
         users.add(new User(2, "Jon", "Walker", "jwalker@skillstorm.com", "password@123"));
         users.add(new User(3, "Aidan", "Pavlik", "apavlik@skillstorm.com", "password@123"));
-        return users;
+        return users.stream().map(UserDTO::convertToDto).toList();
     }
 
-    public User getUserById(long id) throws IllegalArgumentException, NameNotFoundException {
+    public UserDTO getUserById(long id) throws IllegalArgumentException, NameNotFoundException {
 
         // early exit - checking something that will exit this method at the beginning so you can save performance
         if(id < 0) {
@@ -50,7 +51,7 @@ public class UserService {
         // returning the user with the specified ID
         for(User user: users) {
             if (user.getId() == id) {
-                return user;
+                return UserDTO.convertToDto(user);
             }
         }
 
@@ -58,8 +59,8 @@ public class UserService {
 
     }
 
-    public List<User> getUsersByName(String firstName, String lastName) throws NameNotFoundException {
-        
+    public List<UserDTO> getUsersByName(String firstName, String lastName) throws NameNotFoundException {
+
         // simulating calling the database to find a list of all the users
         List<User> users = new LinkedList<>();
         users.add(new User(1, "Austin", "Reeves", "areeves@skillstorm.com", "password@123"));
@@ -80,17 +81,17 @@ public class UserService {
             throw new NameNotFoundException("No user with those names exists.");
         }
 
-        return foundUsers;
+        return foundUsers.stream().map(UserDTO::convertToDto).toList();
     }
 
-    public User createUser(User user) {
+    public UserDTO createUser(User user) {
 
         // simulates creating a new user and the database generating the ID
-        return new User(5, user.getFirstName(), user.getLastName(), user.getEmail(), user.getPassword());
+        return UserDTO.convertToDto(new User(5, user.getFirstName(), user.getLastName(), user.getEmail(), user.getPassword()));
     }
 
 
-    public User updateUser(long id, User user) throws IllegalArgumentException {
+    public UserDTO updateUser(long id, User user) throws IllegalArgumentException {
 
         // early exit - checking something that will exit this method at the beginning so you can save performance
         if(id < 0) {
@@ -98,7 +99,7 @@ public class UserService {
         }
 
         // normally would save new values to DB and return any updated info that the DB generates
-        return user;
+        return UserDTO.convertToDto(user);
     }
 
     public void deleteUser(long id) throws IllegalArgumentException {
