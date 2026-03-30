@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<!-- head - metadata needed/wanted for the webpage. this stuff usually help with Search Engine Optimization (SEO). -->
+<!-- anything in here will not be displayed to the user -->
+<head>
+
+    <!-- meta - used for metadata -->
+    <meta charset="UTF-8">      <!-- tells the browser that this page used the standard US chararcter set -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  <!-- tells the browser how to render the apge for a display -->
+    <meta name="author" content="Austin Reeves" />
+    <meta name="keywords" content="HTML, CSS, Austin Reeves, Hello World" />    <!-- add SEO keywords -->
+
+    <!-- title of the webpage -->
+    <title>Hello World, HTML!</title>
+    
+    <!-- External Styling -->
+    <!-- can include links to other pages and CSS documents. Can also include scripts to link up JS. -->
+    <link rel="stylesheet" href="style.css" />
+
+    <!--
+        Ways to add CSS to an HTML page
+            1. External Styling - (seen above) where you link an external stylesheet
+            2. Internal Styling - where you include CSS inside of the <style> tag in your <head>
+            3. Inline Styling - when you include styling inline, by using the 'style' attribute on a tag
+                - takes priority over the other two
+
+            - external and internal priority - whichever is added last (at bottom of head tag) will take priority
+    -->
+
+    <!-- Internal Styling -->
+    <style>
+        .paragrpah-color {
+            color: green;
+        }
+    </style>
+
+</head>
+
+<!-- body - content you want displayed to the user -->
+<body>
+
+    <!-- 
+        div and span are non-sematic tags
+        they do nothing except give you blocks that you can hook into. 
+
+        div is generally used for larger page sections. 
+        spav is used for in-line things
+
+        anything can go inside of them. therefore, there's no way to know what *is* inside of them
+    -->
+    <div>
+        <!-- CSS styling is applied to classes in order, left to right. the last one added will override the others. -->
+        <!-- ID selectors will take priority over classes -->
+        <h1 id="h1-title" class="headers courier">H1 - Title</h1>
+        <h2 class="headers">H2 - <span style="color: darkorchid;">Subtitle</span></h2>    <!-- Inline Styling -->
+        <h3 class="headers">H3 - Page Sections</h3>
+        <h4 class="headers">H4 - Page Sub-Section</h4>
+        <h5 class="headers">H5 - smaller and smaller...</h5>
+        <h6 class="headers">H6 - even smaller...</h6>
+    </div>
+
+
+
+    <!-- 
+        Semantic Tags 
+            - provide meaning to the content in our page
+            - improve SEO
+            - increase accessibility for things like screen readers
+
+            - MOST tags are technically semantic (p, img, ol, ul, a, h1-h6, etc.)
+            - What we usually refer to when we say Semantic Tags, we mean the tags that don't render any content, but only provide context
+                - article, section, header, footer, main etc.
+    -->
+
+    <!-- header of a page -->
+    <header>    
+        <h1 class="headers">HTML Hello World!</h1>  <!-- will not have styling applied since it doesn't have the class -->
+    </header>
+
+    <!-- main is for the bulk of the content on your page -->
+    <main>
+
+        <!-- section - used to give an outline of the page itself -->
+        <section>
+
+            <!-- defines some self-contained content -->
+            <article>
+                <p class="courier">     <!-- will not have styling applied since it is not an H1 tag -->
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque dolores, eligendi ipsam rem reiciendis esse corrupti, ipsum dolorem explicabo ea dignissimos reprehenderit repellendus, minima tenetur ducimus ullam autem aliquid ad!
+                </p>
+                <p class="paragrpah-color" > <!-- paragrpah-color -->
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque dolores, eligendi ipsam rem reiciendis esse corrupti, ipsum dolorem explicabo ea dignissimos reprehenderit repellendus, minima tenetur ducimus ullam autem aliquid ad!
+                </p>
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque dolores, eligendi ipsam rem reiciendis esse corrupti, ipsum dolorem explicabo ea dignissimos reprehenderit repellendus, minima tenetur ducimus ullam autem aliquid ad!
+                </p>
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque dolores, eligendi ipsam rem reiciendis esse corrupti, ipsum dolorem explicabo ea dignissimos reprehenderit repellendus, minima tenetur ducimus ullam autem aliquid ad!
+                </p>
+            </article>
+
+        </section>
+        <section>
+
+            <!-- img is self-closing tag. a tag that closes itself at the end -->
+            <img src="https://picsum.photos/500/500" alt="random picture" />
+
+        </section>
+
+        <section>
+            <h2>Lists!</h2>
+
+            <!-- ordered lists - numbered -->
+            <h3>Austin's Favorite Foods</h3>
+            <ol id="favorites-list">
+                <li>Fench Fries</li>
+                <li>Rice</li>
+                <li>Steak (Medium)</li>
+                <li>Burger</li>
+                <li>Fried Chicken</li>
+            </ol>
+
+            <!-- unordered lsits - bullet points -->
+            <h3>Austin's Most Hated Foods</h3>
+            <ul>
+                <li>Brussel Sprouts</li>
+                <li>Pickles</li>
+                <li>Mushrooms</li>
+            </ul>
+
+        </section>
+
+
+
+        <!--
+            FLEX BOX EXAMPLE
+        -->
+        <div id="container">
+            <div class="box"><h1>1</h1></div>
+            <div class="box"><h1>2</h1></div>
+            <div class="box">
+                <h1>3</h1>
+                <h1>4</h1>
+                <h1>5</h1>
+            </div>
+            <div class="box"><h1>6</h1></div>
+            <div class="box"><h1>7</h1></div>
+        </div>
+
+
+
+    </main>
+
+    <!-- footer tag for anything at the bottom of the page -->
+    <footer>    
+        <p>
+            Copyright. Austin Reeves. 2026. 
+            <a href="https://www.google.com/" target="_blank">Google</a>
+        </p>
+    </footer>
+
+    
+</body>
+</html>

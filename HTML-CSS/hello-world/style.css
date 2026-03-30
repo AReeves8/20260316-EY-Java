@@ -1,0 +1,75 @@
+/* element selector - applies styling to all of a specific HTML element */
+h2 {
+    color: mediumvioletred;
+    border: 5em;
+    border-color: darkred;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+/* 
+    id selector ( # ) - adds styling to any element with the an ID attribute with the given value 
+        - ids SHOULD be unique in your document so this SHOULD only apply to one element
+*/
+#favorite-list {
+    background-color: blue;
+    border-color: aquamarine;
+    border: 1em;
+    margin: 3em;
+}
+
+/*
+    class seclector ( . ) - applies styling to every element with the given class
+*/
+.headers {
+    padding: 4em;
+    border: 2em;
+    border-radius: 50%;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+
+/*
+    universal selctor ( * ) - applies styling to everything
+
+* {
+    font-size: large;
+}
+
+*/
+
+
+
+/* can combine selectors to be even more specific */
+h1.courier {    /* applies only to h1 elements that have this class name */
+    font-family: 'Courier New', Courier, monospace; 
+}
+
+#h1-title {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.paragrpah-color {
+    color: blue;
+}
+
+
+
+#container {
+    min-height: 1000px;
+    border: 10px solid black;
+    margin: 10px;
+    display: flex;      /* set display to flex to allow flexboxes to work */
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: row-reverse;
+}
+
+.box {
+    border: 3px solid blue;
+    min-height: 200px;
+    min-width: 200px;
+    text-align: center;
+}
+
+
