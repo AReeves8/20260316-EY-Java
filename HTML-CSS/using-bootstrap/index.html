@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Using Bootstrap to Style our Page</title>
+
+    <!-- Including Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+</head>
+<body class="bg-dark">
+
+    <!-- Bootstrap uses classes to apply styling -->
+
+    
+    <!-- CRUD Operations on Movies + Directors -->
+
+
+
+    <!-- wraps a container around our form that we can use the Grid System with -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col m-8">
+                <!-- 
+                    Forms are very nice for taking in information from the user 
+                        - can use forms to receive info on creating and updating records
+                            - NOT THE ONLY WAY, BUT generally THE EASIEST
+                -->
+                <form id="new-movie-form" action="#">  <!-- forms naturally try to redirect you, so use # action to prevent. Or give it a page to redirect you to -->
+
+                    <div class="row mb-3">
+
+                        <div class="col-6">
+                            <!-- Title Input -->
+                            <div class="mx-1"> 
+                                <label for="new-movie-title" class="form-label text-light">Movie Title</label>
+                                <input type="text" class="form-control" id="new-movie-title" placeholder="Avengers: Endgame">
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <!-- Genre Input -->
+                            <div class="mx-1">
+                                <label for="new-movie-genre" class="form-label text-light">Movie Genre</label>
+                                <select class="form-select" aria-label="Movie Genre Form Select">
+                                    <option selected>Open this select menu</option>
+                                    <option value="1">Action</option>
+                                    <option value="2">Romance</option>
+                                    <option value="3">Thriller</option>
+                                    <option value="3">Sci-Fi</option>
+                                    <option value="3">Fantasy</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <!-- Rating Input -->
+                            <div class="mx-1"> 
+                                <label for="new-movie-rating" class="form-label text-light">Movie Rating</label>
+                                <input type="number" class="form-control" id="new-movie-rating" placeholder="10">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col">
+                            <!-- Director First Name Input -->
+                            <div class="mx-1"> 
+                                <label for="new-director-firstname" class="form-label text-light">Director First Name</label>
+                                <input type="text" class="form-control" id="new-director-firstname" placeholder="Russo">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <!-- Director Last Name Input -->
+                            <div class="mx-1"> 
+                                <label for="new-director-lastname" class="form-label text-light">Director Last Name</label>
+                                <input type="text" class="form-control" id="new-director-lastname" placeholder="Brothers">
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="row">
+                        <div class="col justify-content-right">
+                            <button type="submit" class="btn btn-light mx-1">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            
+            <div class="col">
+                <!-- Tables - easy way to display info -->
+                <table class="table table-light table-hover my-8">
+                    <thead>
+                        <tr>
+                            <!-- <th>ID</th>  you don't NEED to display data just cause you have it  -->
+                            <th>Title</th>
+                            <th>Genre</th>
+                            <th>Rating</th>
+                            <th>Director</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Avengers: Endgame</td>
+                            <td>Action</td>
+                            <td>10</td>
+                            <td>Russo Brothers</td>
+                        </tr>
+                        <tr>
+                            <td>Project Hail Mary</td>
+                            <td>Sci-Fi</td>
+                            <td>8</td>
+                            <td>Russo Brothers</td>
+                        </tr>
+                        <tr>
+                            <td>Pulp Fiction</td>
+                            <td>Action</td>
+                            <td>9</td>
+                            <td>Quinten Tarantino</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Including Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+</html>
