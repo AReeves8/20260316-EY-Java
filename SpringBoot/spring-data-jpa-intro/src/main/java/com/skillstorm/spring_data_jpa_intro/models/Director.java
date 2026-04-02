@@ -3,6 +3,7 @@ package com.skillstorm.spring_data_jpa_intro.models;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -28,6 +29,7 @@ public class Director {
 
     @NotBlank
     @Column(name = "last_name")
+    //@JsonProperty("last-name")      // when field is converted to and from JSON, it will use the provided value for name in JSON
     private String lastName;
 
     @JsonIgnore                         // tells Jackson Object Mapper to ignore this property 

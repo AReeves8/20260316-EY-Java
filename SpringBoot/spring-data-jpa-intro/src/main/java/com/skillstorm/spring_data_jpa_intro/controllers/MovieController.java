@@ -11,9 +11,9 @@ import jakarta.validation.Valid;
 
 import java.util.List;
 
-import org.springframework.data.repository.config.RepositoryNameSpaceHandler;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,6 +26,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 
 @RestController
 @RequestMapping("/api/v1/movies")
+
+// telling our server where to expect requests from so we don't get CORS errors
+@CrossOrigin({"http://127.0.0.1:5500"})      // don't want @CrossOriging("*") - this allows everything
 public class MovieController {
 
     private final MovieService service;

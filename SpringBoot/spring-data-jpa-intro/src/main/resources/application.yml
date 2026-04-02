@@ -3,24 +3,24 @@ spring:
         ansi:  
             enabled: always
     
-    # datasource:
-    #     url: jdbc:h2:mem:moviesdb           # name your db - if you want persistence between runs - jdbc:h2:file:[path]
-    #     username: sa                        # default username
-    #     password:                           # optional
-    #     driver-class-name: org.h2.Driver    # database driver that jdbc uses
-
-    # # h2 needs the following as well. these are usually optional for other db connections
-    # jpa:
-    #     database-platform: org.hibernate.dialect.H2Dialect      # telling JPA that we're using H2
-    #     defer-datasource-initialization: true                   # tells JPA to wait until hibernate has initialized before loading data into H2
-
     datasource:
-        url: jdbc:postgresql://localhost:5432/movies
-        username: postgres
-        password: root
-        driver-class-name: org.postgresql.Driver
+        url: jdbc:h2:mem:moviesdb           # name your db - if you want persistence between runs - jdbc:h2:file:[path]
+        username: sa                        # default username
+        password:                           # optional
+        driver-class-name: org.h2.Driver    # database driver that jdbc uses
+
+    # h2 needs the following as well. these are usually optional for other db connections
     jpa:
-        database: postgresql
+        database-platform: org.hibernate.dialect.H2Dialect      # telling JPA that we're using H2
+        defer-datasource-initialization: true                   # tells JPA to wait until hibernate has initialized before loading data into H2
+
+    # datasource:
+    #     url: jdbc:postgresql://localhost:5432/movies
+    #     username: postgres
+    #     password: root
+    #     driver-class-name: org.postgresql.Driver
+    # jpa:
+    #     database: postgresql
 
         # fully optional depending on your situation
         hibernate:
