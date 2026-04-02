@@ -1,6 +1,8 @@
-
+// global variables
 const URL = "http://localhost:8080/api/v1/movies";
 let allMovies = [];
+let movieToUpdate;
+let movieToDelete;
 
 /**
  * DOM - Document Object Model
@@ -118,7 +120,92 @@ document.getElementById("new-movie-form").addEventListener("submit", (eventInfo)
 
 });
 
+// PUT request for updating an existing record
+document.getElementById("update-movie-form").addEventListener("submit", (event) => {
+    event.preventDefault();		// prevent default form actions from occuring
 
+    // retrieving data from the update form
+    const inputData = new FormData(document.getElementById("update-movie-form"));
+
+    const movie = {
+        id : movieToUpdate.id,
+        title : inputData.get("update-movie-title"),         
+        rating : inputData.get("update-movie-rating"),
+        genre: inputData.get("update-movie-genre"),
+        director : {
+            id : movieToUpdate.director.id,
+            firstName : inputData.get("update-director-first"),
+            lastName : inputData.get("update-director-last")
+        }
+    }
+
+    /**
+     * alternative/preferred way to handle promises:
+     *      rather than using async/await, we can use .then() and pass in a callback function
+     * 
+     *      .then will run whenever the promise returns succesfully
+     *      .catch will run whenever the promise returns unsuccessfully
+     */
+    fetch(URL + `/${movieToUpdate.id}`, {
+        method : "PUT",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body : JSON.stringify(movie)
+    })
+    .then((httpResponse) => {
+        // .then() will handle all 100, 200, and 300 status code responses
+        
+        // we still need to serialize the response into JSON
+        return httpResponse.json();
+    })
+    .then((movieJson) => {          // handling the promise returned by data.json (*** this is where we update the table ***)
+        
+        // adding the updated movie to our table
+        updateMovieInTable(movieJson);
+
+        // reset the forms
+        resetAllForms();
+    })
+    .catch((error) => {
+        // this will handle all 400 and 500 status code responses in either .then()
+
+        console.error(error);   // generally, you never want to use console.log() - especially in a production environment
+    })
+});
+
+// DELETE request to remove an existing record
+document.getElementById("delete-movie-form").addEventListener("submit", (event) => {
+    event.preventDefault();		// prevent default form actions from occuring
+
+    // sending delete request
+    fetch(URL + `/${movieToDelete.id}`, {
+        method : "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+        }
+    })
+    .then((httpRespone) => {
+
+        // delete request returns no-content so there's no need to deserialize the response and wait for that promie
+        // just need to check that the response we got back is 204 - No Content and we can delete it on the front end
+        if(httpRespone.status === 204) {
+            // remove movie from table
+            removeMovieFromTable(movieToDelete.id);
+
+            // resetting all forms
+            resetAllForms();
+        }
+    })
+    .catch((error) => {
+        console.error(error);   
+    })
+
+});
+
+////////////////////////////////
+/////// HELPER FUNCTIONS ///////
+///////////////////////////////
 
 // creating an async function for posting movies with fetch
 const postNewMovie = async (newMovie) => {
@@ -185,11 +272,31 @@ const addMovieToTable = (newMovie) => {
     allMovies.push(newMovie);
 }
 
+// helper function to update a movie object in the HTML table
+const updateMovieInTable = (movie) => {
+
+    // can manually set innerHTML rather than creating a bunch of new tags
+    document.getElementById("TR-" + movie.id).innerHTML = `
+    <td>${movie.title}</td>
+    <td>${movie.genre}</td>
+    <td>${movie.rating}</td>
+    <td>${movie.director.firstName + " " + movie.director.lastName}</td>
+    <td><button class="btn btn-primary p-1" id="EDIT-${movie.id}" onclick="activateEditForm(${movie.id})">Edit</button></td>
+    <td><button class="btn btn-danger p-1" id="DEL-${movie.id}" onclick="activateDeleteForm(${movie.id})">Delete</button></td>
+    `;
+}
+
+// helper function to remove a movie from the HTML table
+const removeMovieFromTable = (movieId) => {
+    // using the table row ID to find it in the document and remove it
+    const tr = document.getElementById("TR-" + movieId);
+    tr.remove();
+}
+
 // helper function to enable update form
 const activateEditForm = (movieId) => {
 
     // getting the movie data for the id that was given
-    let movieToUpdate;
     for(let movie of allMovies) {
         if(movie.id === movieId) {
             movieToUpdate = movie;
@@ -204,7 +311,7 @@ const activateEditForm = (movieId) => {
     document.getElementById("update-director-firstname").value = movieToUpdate.director.firstName;
     document.getElementById("update-director-lastname").value = movieToUpdate.director.lastName;
 
-    // when edit is clicked, hide "new" form and show "update" form
+    // when edit is clicked, hide "new" and "delete" forms and show "update" form
     document.getElementById("update-movie-form").style.display = "block";
     document.getElementById("new-movie-form").style.display = "none";
     document.getElementById("delete-movie-form").style.display = "none";
@@ -214,7 +321,6 @@ const activateEditForm = (movieId) => {
 // helper function to enable delete form
 const activateDeleteForm = (movieId) => {
     // getting the movie data for the id that was given
-    let movieToDelete;
     for(let movie of allMovies) {
         if(movie.id === movieId) {
             movieToDelete = movie;
@@ -222,15 +328,22 @@ const activateDeleteForm = (movieId) => {
         }
     }
 
-    // fill in the edit form with the values of the movie that is being edited
+    // fill in the delete form with the values of the movie that is being deleted
     document.getElementById("delete-movie-title").value = movieToDelete.title;
     document.getElementById("delete-movie-genre").value = movieToDelete.genre;
     document.getElementById("delete-movie-rating").value = movieToDelete.rating;
     document.getElementById("delete-director-firstname").value = movieToDelete.director.firstName;
     document.getElementById("delete-director-lastname").value = movieToDelete.director.lastName;
 
-    // when edit is clicked, hide "new" form and show "delete" form
+    // when delete is clicked, hide "new" and "update" forms and show "delete" form
     document.getElementById("delete-movie-form").style.display = "block";
     document.getElementById("new-movie-form").style.display = "none";
     document.getElementById("update-movie-form").style.display = "none";
+}
+
+// helper function to reset forms
+const resetAllForms = () => {
+    document.getElementById("new-movie-form").style.display = "block";
+    document.getElementById("update-movie-form").style.display = "none";
+    document.getElementById("delete-movie-form").style.display = "none";
 }
