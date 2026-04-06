@@ -1,0 +1,84 @@
+
+<main class="main">
+  
+  <!--
+    INTERPOLATION {{ propertyName }}
+      - angular binding data to the DOM
+      - one-way binding
+        - TS -> HTML
+          - the only way to change what is displayed, is to change the TS. State is being managed there. 
+
+    PROPERTY BINDING [attributeName]
+      - bind data to HTML tag attributes
+      - good for setting values dynamically
+  -->
+  <h1 [class.highlight]="isHighlighted" >{{ message }}</h1>
+
+  <!--
+    EVENT BINDING (eventName)
+      - binding data to DOM events
+      - creates an event listener on this element and binds it to a function
+  -->
+  <button (click)="increment()" >Click Me!</button>
+  <p>{{count}}</p>
+
+
+  <!--
+    [(NGMODEL)]
+      - two-way binding
+        - HTML <-> TS
+
+      - comes from @angular/forms (FormsModule)
+  -->
+  <div>
+      <input [(ngModel)]="searchText" />
+      <p>You searched for: {{searchText}}</p>
+  </div>
+
+
+</main>
+
+
+
+<!--
+  DIRECTIVES
+    - ways to dynamically render HTML
+    - adds logic to your HTML pages
+
+    - ngFor: loop through a list and render some content for each element of that list
+    - ngIf: only redner the content if the condition is true
+    - WARNING! Above has been deprecated since v20. We are in v21 now. 
+
+    - the following is the replacement and comes from @angular/core:
+      - @for() {} @empty {} - render some content for each item. display something else if the list is empty.
+      - @if() {} @else if() {} @else {} - render different content based on boolean conditions
+      
+      - doc links:
+        - https://angular.dev/api/core/@for
+        - https://angular.dev/api/core/@if
+
+      - also have @switch to replace larger if-else blocks
+      - also have @let to define variables
+-->
+<div>
+  @for (movie of allMovies; track movie.id; let i = $index) {
+    <div>
+      @if (i == 0) {
+        <p>-------------------------------------------------------</p>
+      }
+      <ul>
+        <li>Movie {{i+1}}: {{movie.id}}</li>
+        <li>Movie {{i+1}}: {{movie.title}}</li>
+        <li>Movie {{i+1}}: {{movie.rating}}</li>
+        <li>Movie {{i+1}}: {{movie.genre}}</li>
+        <li>Movie {{i+1}}: {{movie.director.firstName + " " + movie.director.lastName}}</li> <!-- interpolation can take in ANY valid TS expression -->
+      </ul>
+      <p>-------------------------------------------------------</p>
+    </div>
+  }
+</div>
+
+
+
+
+<router-outlet />
