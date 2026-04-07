@@ -9,6 +9,7 @@ import com.skillstorm.spring_data_jpa_intro.services.DirectorService;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -17,7 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @RestController
 @RequestMapping("/api/v1/directors")
-@CrossOrigin({"http://127.0.0.1:5500"})       
+@CrossOrigin({"http://127.0.0.1:5500", "http://localhost:4200"})       
 public class DirectorController {
 
     private final DirectorService service;
@@ -27,7 +28,7 @@ public class DirectorController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Director>> getAllDirectors(
+    public ResponseEntity<Page<Director>> getAllDirectors(
         @RequestParam(defaultValue = "2") int size,
         @RequestParam(defaultValue = "0") int page,
         @RequestParam(defaultValue = "id") String sortBy

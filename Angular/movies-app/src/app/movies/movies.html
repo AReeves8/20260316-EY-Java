@@ -1,0 +1,52 @@
+
+<!-- header -->
+<div class="flex justify-center">
+    <div class="grid grid-cols-2 p-5 w-9/12">
+        <h1 class="justify-self-start text-4xl">All Movies</h1>
+        <p-button label="Create New Movie" class="justify-self-end" />
+    </div>
+</div>
+
+<!-- Grid of Cards to display movies -->
+<div class="flex justify-center">
+    <div class="grid grid-cols-4 gap-3 p-2 w-9/12">
+        @for (movie of allMovies; track $index) {
+            <div>
+                <p-card>
+
+                    <!--
+                        TEMPLATE REFERENCE VARIABLES #
+                            - this creates a variable that contains a reference to an HTML ELEMENT
+                                - this lets you manipulate the element itself, rather than the data within
+
+                            - PrimeNG uses these a lot, but you can also create your own when you need
+                    -->
+                    <!-- Card Title and Subtitle -->
+                    <ng-template #title>{{ movie.title }}</ng-template>
+                    <ng-template #subtitle>{{ movie.genre }}</ng-template>
+
+                    <!-- Card Content -->
+                    <p>
+                        Rating: {{movie.rating}}/10
+                    </p>
+                    <p>
+                        Directed By: {{movie.director.firstName}} {{movie.director.lastName}}
+                    </p>
+
+                    <!-- Card Footer -->
+                    <ng-template #footer>
+                        <div class="flex justify-center">
+                            <!-- 
+                                Many PrimeNG components are wrapped in a container. 
+                                When you add tailwind styling with class, it applies to the outer container, not the element itself
+                                use styleClass to affect the styling of the element itself
+                            -->
+                            <p-button label="Delete" severity="danger" [outlined]="true" class="w-full m-1" styleClass="w-full m-1"/>
+                            <p-button label="Update" class="w-full m-1" styleClass="w-full m-1" />
+                        </div>
+                    </ng-template>
+                </p-card>
+            </div>
+        }
+    </div>
+</div>

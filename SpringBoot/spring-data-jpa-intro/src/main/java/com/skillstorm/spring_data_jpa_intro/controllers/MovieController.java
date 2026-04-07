@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 @RequestMapping("/api/v1/movies")
 
 // telling our server where to expect requests from so we don't get CORS errors
-@CrossOrigin({"http://127.0.0.1:5500"})      // don't want @CrossOriging("*") - this allows everything
+@CrossOrigin({"http://127.0.0.1:5500", "http://localhost:4200"})         // don't want @CrossOriging("*") - this allows everything
 public class MovieController {
 
     private final MovieService service;

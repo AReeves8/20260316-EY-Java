@@ -21,7 +21,7 @@ public class DirectorService {
         this.repository = repository;
     }
 
-    public List<Director> getAllDirectors(int page, int size, String sortBy) {
+    public Page<Director> getAllDirectors(int page, int size, String sortBy) {
 
         // pageable uses the page number and the size to determine which records to send back
         // OFFSET page*size
@@ -29,8 +29,8 @@ public class DirectorService {
         // ORDER BY sortBy property
         Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
         Page<Director> directorsPage = repository.findAll(pageable);
-        List<Director> directorsList = directorsPage.getContent();
-        return directorsList;
+        //List<Director> directorsList = directorsPage.getContent();
+        return directorsPage;
     }
 
     public Director findDirectorById(Integer id) {
