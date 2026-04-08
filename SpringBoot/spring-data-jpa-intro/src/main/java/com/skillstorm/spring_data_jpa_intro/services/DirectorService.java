@@ -33,6 +33,10 @@ public class DirectorService {
         return directorsPage;
     }
 
+    public List<Director> getAllDirectors() {
+        return repository.findAll();
+    }
+
     public Director findDirectorById(Integer id) {
 
         Optional<Director> director = repository.findById(id);

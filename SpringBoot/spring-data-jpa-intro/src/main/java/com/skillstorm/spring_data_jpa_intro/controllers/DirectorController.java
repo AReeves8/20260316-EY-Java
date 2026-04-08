@@ -27,13 +27,18 @@ public class DirectorController {
         this.service = service;
     }
 
-    @GetMapping
+    @GetMapping("/page")
     public ResponseEntity<Page<Director>> getAllDirectors(
         @RequestParam(defaultValue = "2") int size,
         @RequestParam(defaultValue = "0") int page,
         @RequestParam(defaultValue = "id") String sortBy
     ) {
         return new ResponseEntity<>(service.getAllDirectors(page, size, sortBy), HttpStatus.OK);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Director>> getAllDirectors() {
+        return new ResponseEntity<>(service.getAllDirectors(), HttpStatus.OK);
     }
     
 }

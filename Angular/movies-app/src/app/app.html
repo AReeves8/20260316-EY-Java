@@ -1,6 +1,15 @@
 
+<p-menubar
+    [model]="navItems"
+>
+    <ng-template #end>
+        <h1 class="text-3xl">Movies App</h1>
+    </ng-template>
+</p-menubar>
 
-<app-movies></app-movies>
-
-
+<!--
+    When you have routes defined in your application, you will map a URL path to some component
+    whatever component is picked for the current URl path in the browser, will be displayed 
+    whereever your router-outlet is
+-->
 <router-outlet />

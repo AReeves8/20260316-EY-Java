@@ -3,14 +3,14 @@
 <div class="flex justify-center">
     <div class="grid grid-cols-2 p-5 w-9/12">
         <h1 class="justify-self-start text-4xl">All Movies</h1>
-        <p-button label="Create New Movie" class="justify-self-end" />
+        <p-button label="Create New Movie" class="justify-self-end" (onClick)="handleCreateMovie()" />
     </div>
 </div>
 
 <!-- Grid of Cards to display movies -->
 <div class="flex justify-center">
     <div class="grid grid-cols-4 gap-3 p-2 w-9/12">
-        @for (movie of allMovies; track $index) {
+        @for (movie of allMovies(); track $index) {     <!-- get value of a signal with signalName() -->
             <div>
                 <p-card>
 
@@ -41,8 +41,20 @@
                                 When you add tailwind styling with class, it applies to the outer container, not the element itself
                                 use styleClass to affect the styling of the element itself
                             -->
-                            <p-button label="Delete" severity="danger" [outlined]="true" class="w-full m-1" styleClass="w-full m-1"/>
-                            <p-button label="Update" class="w-full m-1" styleClass="w-full m-1" />
+                            <p-button 
+                                label="Delete" 
+                                severity="danger" 
+                                [outlined]="true" 
+                                class="w-full m-1" 
+                                styleClass="w-full m-1"
+                                (onClick)="handleDeleteMovie(movie)"
+                            />
+                            <p-button 
+                                label="Update" 
+                                class="w-full m-1" 
+                                styleClass="w-full m-1" 
+                                (onClick)="handleUpdateMovie(movie)" 
+                            />
                         </div>
                     </ng-template>
                 </p-card>
@@ -50,3 +62,68 @@
         }
     </div>
 </div>
+
+
+<!-- Dialog Modal for Create/Update Form -->
+<p-dialog
+    [modal]="true"
+    [visible]="showFormDialog()"
+    [style]="{width: '40rem', height: '40rem'}"
+>
+
+    <form
+        [formGroup]="form"
+        (ngSubmit)="saveMovie()"
+    >
+        <!-- Title Input -->
+        <p-ifta-label class="w-full p-2">
+            <input id="movie-title" pInputText type="text" formControlName="title" />
+            <label for="movie-title">Title</label>
+        </p-ifta-label>
+
+        <!-- Rating Input -->
+        <p-ifta-label class="w-full p-2">
+            <p-input-number id="movie-rating" formControlName="rating" [min]="1" [max]="10" />
+            <label for="movie-rating">Rating (1-10)</label>
+        </p-ifta-label>
+
+        <!-- Genre Input -->
+        <p-ifta-label class="w-full p-2">
+            <p-select
+                id="movie-genre"
+                formControlName="genre"
+                [options]="genreOptions"
+            />
+            <label for="movie-genre">Genre</label>
+        </p-ifta-label>
+
+        <!-- Director Input -->
+        <p-ifta-label class="w-full p-2">
+            <p-select
+                id="movie-director"
+                formControlName="directorId"
+                [options]="allDirectors()"
+            >
+                <!-- Tells PrimeNG how to format the items in the select menu -->
+                <ng-template #item let-director>{{director.firstName}} {{director.lastName}}</ng-template>
+                <ng-template #selectedItem let-director>{{director.firstName}} {{director.lastName}}</ng-template>
+            </p-select>
+            <label for="movie-director">Director</label>
+        </p-ifta-label>
+        
+        <p-button label="Cancel" type="button" severity="secondary" [outlined]="" (onClick)="showFormDialog.set(false)" class="w-1/2 p-2"/>
+
+        <!-- disabling the form until it passes checks from the Form Validators -->
+        <p-button label="Save" type="submit" [disabled]="form.invalid" class="w-1/2 p-2" />
+
+    </form>
+
+</p-dialog>
+
+<!-- passing data into input variables and handling output events -->
+<app-delete-confirmation-modal
+    [visible]="showDeleteDialog()"
+    [recordName]="selectedMovie()?.title ?? ''"
+    (confirmed)="deleteMovie()"
+    (cancelled)="showDeleteDialog.set(false)"
+/>
