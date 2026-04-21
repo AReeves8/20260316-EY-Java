@@ -1,0 +1,17 @@
+services:
+
+  # you can name your services whatever you want, I chose backend/frontend
+  backend:
+    build:
+      context: ./spring-data-jpa-intro
+    ports:
+      - "8080:8080"   # setting up port mappings. remember - host:container
+
+  frontend:
+    build:
+      context: ./movies-app
+    ports:
+      - "4200:80"
+
+    depends_on:
+      - backend   # don't start the frontend container until the backend is running
