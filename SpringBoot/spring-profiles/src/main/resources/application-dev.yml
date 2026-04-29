@@ -1,0 +1,18 @@
+
+# Initializing H2 for dev environment
+spring:    
+    datasource:
+        url: ${DEV_DB_URL}
+        username: ${DEV_DB_USERNAME}
+        password: ${DEV_DB_PASSWORD}
+        driver-class-name: org.h2.Driver    # database driver that jdbc uses
+
+    # h2 needs the following as well. these are usually optional for other db connections
+    jpa:
+        database-platform: org.hibernate.dialect.H2Dialect      # telling JPA that we're using H2
+        defer-datasource-initialization: true                   # tells JPA to wait until hibernate has initialized before loading data into H2
+
+
+features:
+    get-by-rating: false        # will override the value set in the generic application.yml
+    max-movie-results: 54

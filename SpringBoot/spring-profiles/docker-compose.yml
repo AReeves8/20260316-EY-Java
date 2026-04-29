@@ -1,0 +1,36 @@
+services:
+
+  # PostgreSQL database
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: movies
+
+      # Docker Compose can automatically read from .env
+      POSTGRES_USER: ${PROD_DB_USERNAME}
+      POSTGRES_PASSWORD: ${PROD_DB_PASSWORD}
+
+    ports:
+      - "5432:5432"
+    
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${PROD_DB_USERNAME} -d movies"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Spring Boot Application
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+
+    environment:
+      APP_PROFILE: prod
+      PROD_DB_URL: jdbc:postgresql://postgres:5432/movies  # URL host is the name of the Docker Service created above 
+      PROD_DB_USERNAME: ${PROD_DB_USERNAME}                        
+      PROD_DB_PASSWORD: ${PROD_DB_PASSWORD}
+    
+    depends_on:
+      postgres:
+        condition: service_healthy

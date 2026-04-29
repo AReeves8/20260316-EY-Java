@@ -9,8 +9,10 @@ import com.skillstorm.spring_profiles.services.MovieService;
 
 import jakarta.validation.Valid;
 
+import java.util.LinkedList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -31,6 +33,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 @CrossOrigin({"http://127.0.0.1:5500", "http://localhost:4200"})         // don't want @CrossOriging("*") - this allows everything
 public class MovieController {
 
+    // @Value annotation can pull a variable from your .yml/.properties
+    @Value("${features.get-by-rating}")
+    private boolean getByRatingIsEnabled;
+
     private final MovieService service;
 
     public MovieController(MovieService service) {
@@ -40,9 +46,16 @@ public class MovieController {
     @GetMapping
     public ResponseEntity<List<Movie>> getAllMovies(@RequestParam(required = false) Integer rating) {
 
-        // if the param is not given, then it will be null
+        List<Movie> movies = new LinkedList<>();
+        if(getByRatingIsEnabled) {
+            movies = service.getMovies(rating);     // if the param is not given, then it will be null
+        }
+        else {
+            // if the feature is disabled, manually set ratings to null so it won't be used
+            rating = null;
+            movies = service.getMovies(rating);
+        }
 
-        List<Movie> movies = service.getMovies(rating);
         if(movies == null) {
             return ResponseEntity.notFound().build();
         }
