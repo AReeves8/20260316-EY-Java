@@ -13,17 +13,17 @@ spring:
     jpa:
         database-platform: org.hibernate.dialect.H2Dialect      # telling JPA that we're using H2
         defer-datasource-initialization: true                   # tells JPA to wait until hibernate has initialized before loading data into H2
-
-    # datasource:
-    #     url: jdbc:postgresql://localhost:5432/movies
-    #     username: postgres
-    #     password: root
-    #     driver-class-name: org.postgresql.Driver
-    # jpa:
-    #     database: postgresql
-
-        # fully optional depending on your situation
         hibernate:
-            # tells hibernate how to handle DDL with your entities
-            #ddl-auto: create-drop   # hibernate will create the schema from our models and then drop them when the session ends 
             ddl-auto: create
+
+management:
+    endpoints:
+        web:
+            base-path: /actuator
+            exposure:
+                include: "*"    # exposes ALL endpoints - might not be beneficial in prod
+
+    endpoint:
+        health:
+            show-details: always
+        

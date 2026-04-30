@@ -10,15 +10,35 @@ import com.skillstorm.spring_boot_actuator.models.Director;
 import com.skillstorm.spring_boot_actuator.models.Movie;
 import com.skillstorm.spring_boot_actuator.repositories.MovieRepository;
 
+import io.micrometer.core.instrument.Counter;
+import io.micrometer.core.instrument.MeterRegistry;
+import io.micrometer.core.instrument.Timer;
+
 @Service
 public class MovieService {
 
     private final MovieRepository repository;
     private final DirectorService directorService;
 
-    public MovieService(MovieRepository repository, DirectorService directorService) {
+    private final Counter movieFetchCounter;    // counts the number of times getMovies() is called
+    private final Timer movieFetchTimer;        // measure the time it takes for getMovies() to complete
+
+
+    public MovieService(MovieRepository repository, DirectorService directorService, MeterRegistry meterRegistry) {
         this.repository = repository;
         this.directorService = directorService;
+
+        // use the global meter registry to create counter and timer
+        movieFetchCounter = Counter.builder("movies.fetch.total")
+            .description("Total number of times getMovies() was invoked.")
+            .tag("service", "MovieService")
+            .register(meterRegistry);   
+
+        movieFetchTimer = Timer.builder("movies.fetch.duration")
+            .description("Duration for getMovies() to complete.")
+            .tag("service", "MovieService")
+            .register(meterRegistry); 
+
     }
 
 
@@ -29,17 +49,25 @@ public class MovieService {
      */
     public List<Movie> getMovies(Integer rating) {
 
-        if(rating == null) {
-            return repository.findAll();    // built in method to retreive all rows in the table
-        }
+        // the duration will automatically be calculated and returned for us. 
+        return movieFetchTimer.record(() -> {
 
-        repository.findByRatingGreaterThanEqual(rating);
-        Optional<List<Movie>> movies = repository.findByRatingGreaterThanEqual(rating);
-        if(movies.isPresent()) {
-            return movies.get();
-        }
-        // throw an exception, return null, whatever error handling scenario you'd like
-        return null;
+            // increment counter for this method
+            movieFetchCounter.increment();
+
+            if(rating == null) {
+                return repository.findAll();    // built in method to retreive all rows in the table
+            }
+
+            repository.findByRatingGreaterThanEqual(rating);
+            Optional<List<Movie>> movies = repository.findByRatingGreaterThanEqual(rating);
+            if(movies.isPresent()) {
+                return movies.get();
+            }
+            // throw an exception, return null, whatever error handling scenario you'd like
+            return null;
+        });
+        
     }
 
 

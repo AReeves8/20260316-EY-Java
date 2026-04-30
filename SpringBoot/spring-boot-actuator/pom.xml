@@ -11,7 +11,7 @@
 	<groupId>com.skillstorm</groupId>
 	<artifactId>spring-boot-actuator</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>spring-boot-actuator</name>
+	<name>spring-boot-actuator</name> 
 	<description/>
 	<url/>
 	<licenses>
@@ -49,15 +49,25 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
-		<!-- 
-			H2
-				in-memory SQL database
-				only lives and persists data for the duration of your application
-				GREAT for dev and testing
-				AWFUL, VERY BAD, NO GOOD for prod
+		<!-- Spring Boot Actuator -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
 
-				looks for a schema.sql and a data.sql file in your resources folder on startup
-		-->
+		<!-- Spring Security -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+
+		<!-- Micrometer Prometheus Registry -->
+		<dependency>
+			<groupId>io.micrometer</groupId>
+			<artifactId>micrometer-registry-prometheus</artifactId>
+		</dependency>
+
+		<!-- H2 -->
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
