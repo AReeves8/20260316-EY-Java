@@ -1,0 +1,24 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-EurekaServerApplication<eureka-server>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.skillstorm.eureka_server.EurekaServerApplication",
+            "projectName": "eureka-server",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-AccountsServiceApplication<accounts-service>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.skillstorm.accounts_service.AccountsServiceApplication",
+            "projectName": "accounts-service",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        },
+    ]
+}

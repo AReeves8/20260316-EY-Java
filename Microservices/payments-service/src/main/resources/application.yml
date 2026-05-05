@@ -1,0 +1,16 @@
+spring:
+    application:
+        name: payments-service
+
+server:
+    port: 8082
+
+# tell this project where discovery service is so it can go register itself
+eureka:
+    client:
+        service-url:
+            default-zone: http://localhost:8761
+
+    # set length of time between "heartbeat" requests
+    instance:
+        leaseRenewalIntervalInSeconds: 30

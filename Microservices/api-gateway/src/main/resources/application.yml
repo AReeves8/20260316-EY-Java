@@ -1,0 +1,21 @@
+server:
+    port: 8125
+
+spring:
+    application:
+        name: api-gateway
+
+    cloud:
+        gateway:
+            server:
+                webflux:
+                    routes:
+                        - id: accounts-service          # must match the application name in the other services
+                          uri: lb://accounts-service    # lb:// will route traffic to the built-in spring cloud load balancer
+                          predicates:
+                            - Path=/accounts/**         # any request to /accounts gets routed to accounts-service 
+
+                        - id: payments-service          # must match the application name in the other services
+                          uri: lb://payments-service    # lb:// will route traffic to the built-in spring cloud load balancer
+                          predicates:
+                            - Path=/payments/**         # any request to /payments gets routed to payments-service 
