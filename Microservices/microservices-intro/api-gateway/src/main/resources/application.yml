@@ -1,0 +1,46 @@
+server:
+    port: 8125
+
+spring:
+    application:
+        name: api-gateway
+
+    cloud:
+        gateway:
+            server:
+                webflux:
+                    routes:
+                        - id: accounts-service          # must match the application name in the other services
+                          uri: lb://accounts-service    # lb:// will route traffic to the built-in spring cloud load balancer
+                          predicates:
+                            - Path=/accounts/**         # any request to /accounts gets routed to accounts-service 
+                          filters:
+                            - name: CircuitBreaker      # creates the circuit breaker filter on requests to /accounts
+                              args:                     # specify where to navigate to when the circuit breaker pops
+                                  name: fallbackController              
+                                  fallbackUri: forward:/cache/accounts
+                          
+
+                        - id: payments-service          # must match the application name in the other services
+                          uri: lb://payments-service    # lb:// will route traffic to the built-in spring cloud load balancer
+                          predicates:
+                            - Path=/payments/**         # any request to /payments gets routed to payments-service 
+                          filters:
+                            - name: CircuitBreaker      # creates the circuit breaker filter on requests to /accounts
+                              args:                     # specify where to navigate to when the circuit breaker pops
+                                  name: fallbackController              
+                                  fallbackUri: forward:/cache/payments
+
+                    # can setup security for all services in the gateway since everything has to go through it
+                    # just make sure other services are not publicly accessible if your security is only in one spot
+                    globalcors:
+                        cors-configurations:
+                            '[/**]':        # matches every endpoint
+                                allowedOrigins: "http://localhost:4200"
+                                allowwedMethods:
+                                    - GET
+                                    - POST
+                                    - PUT
+                                    - DELETE
+                                    - OPTIONS       # allows pre-flight cors requests to come through
+
