@@ -1,0 +1,14 @@
+spring:
+    application:
+        name: eureka-server     # ID used for the discovery client
+
+# make sure that each project is running on a different port. they can't all be on 8080 at the same time
+server:
+    port: 8761      # default port for the eureka server
+
+
+# need to tell the eureka server to not register itself with itself
+eureka:
+  client:
+    fetch-registry: false
+    register-with-eureka: false
