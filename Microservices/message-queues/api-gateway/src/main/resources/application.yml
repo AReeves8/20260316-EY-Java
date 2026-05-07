@@ -10,8 +10,8 @@ spring:
             server:
                 webflux:
                     routes:
-                        - id: accounts-service          # must match the application name in the other services
-                          uri: lb://accounts-service    # lb:// will route traffic to the built-in spring cloud load balancer
+                        - id: rabbitmq-subscriber          # must match the application name in the other services
+                          uri: lb://rabbitmq-subscriber    # lb:// will route traffic to the built-in spring cloud load balancer
                           predicates:
                             - Path=/accounts/**         # any request to /accounts gets routed to accounts-service 
                           filters:
@@ -21,8 +21,8 @@ spring:
                                   fallbackUri: forward:/cache/accounts
                           
 
-                        - id: payments-service          # must match the application name in the other services
-                          uri: lb://payments-service    # lb:// will route traffic to the built-in spring cloud load balancer
+                        - id: rabbitmq-publisher          # must match the application name in the other services
+                          uri: lb://rabbitmq-publisher    # lb:// will route traffic to the built-in spring cloud load balancer
                           predicates:
                             - Path=/payments/**         # any request to /payments gets routed to payments-service 
                           filters:
