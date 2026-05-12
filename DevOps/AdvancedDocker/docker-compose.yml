@@ -1,0 +1,29 @@
+services:
+  backend:
+    build: 
+      context: ./spring-data-jpa-intro
+    ports:
+      - "8080:8080"
+    volumes:
+      - api-logs:/app/logs  # put info that would be in /app/logs into the volume
+
+    environment:
+        # by default, spring first looks in the ENVIRONMENT for a logging file -> logging.file.name
+      - LOGGING_FILE_NAME=/app/logs/spring-app.log    # telling spring boot where to write log files to in container
+
+  frontend:
+    build: 
+      context: ./movies-app
+    ports:
+      - "4200:80"
+    depends_on:
+      - backend
+
+
+
+
+volumes:
+
+  # creates a named volume managed by docker. will persist until the volume is removed. 
+  api-logs:
+    driver: local
