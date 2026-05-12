@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-SpringDataJpaIntroApplication<com.skillstorm-spring-data-jpa-intro>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.skillstorm.spring_data_jpa_intro.SpringDataJpaIntroApplication",
+            "projectName": "com.skillstorm-spring-data-jpa-intro",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
