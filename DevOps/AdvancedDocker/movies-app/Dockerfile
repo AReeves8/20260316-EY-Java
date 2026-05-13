@@ -16,10 +16,11 @@ COPY . .
 # build the app - creates the /dist folder with HTML/CSS/JS code
 RUN npm run build
 
-
+#====================================================================
 # STAGE 2: RUN
-#   - nginx: lightweight tool to serve static files (HTML/CSS/JS)
-FROM nginx:alpine
+#   - nginxinc/nginx-unprivileged - the official non-root user version of nginx
+#       - pre-configured to run as a custom user named "nginx" (UID 101)
+FROM nginxinc/nginx-unprivileged:alpine
 
 # copying over static files to container where nginx can find them
 COPY --from=build /app/dist/movies-app/browser /usr/share/nginx/html
@@ -27,6 +28,5 @@ COPY --from=build /app/dist/movies-app/browser /usr/share/nginx/html
 # configure nginx to handle angular's routing
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# nginx runs on port 80, so we expose that one for the container
-# browser -> nginx (80) -> frontend app (4200) -> backend (8080 of another container)
-EXPOSE 80
+# listens on port 8080 instead of just 80 since it is no longer root 
+EXPOSE 8080

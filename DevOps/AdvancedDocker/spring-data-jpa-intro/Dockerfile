@@ -39,8 +39,22 @@ FROM eclipse-temurin:21-jre
 
 WORKDIR /app
 
+
+# groupadd --system appgroup    -> creates a system group (GID < 1000 -> no login, no home dir) named appgroup
+# useradd --system              -> create a system user (UID < 1000 -> no password, limited login)
+#   --gid appgroup              -> adds the user to the group created above
+#   --no-create-home            -> doesn't create a /home/appuser directory
+#   appuser                     -> name of the system user
+RUN groupadd --system appgroup && useradd --system --gid appgroup --no-create-home appuser
+
 # copies the JAR file from the build image to the run image
 COPY --from=build /app/target/*.jar app.jar
+
+# need to make our new user the owner of the jar so they can run it
+RUN chown appuser:appgroup app.jar
+
+# switch to new user
+USER appuser
 
 # EXPOSE: opens a port in the container to allow traffic through
 EXPOSE 8080
