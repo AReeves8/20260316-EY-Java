@@ -1,0 +1,14 @@
+# ConfigMaps are good for non-sensitive configuration info
+# this lets you restart a pod with new configuration settings without having to rebuild an image
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: movies-api-config
+
+data:
+  SPRING_DATASOURCE_URL: "jdbc:h2:mem:movies-api-database"
+  SPRING_DATASOURCE_DRIVER_CLASS_NAME: "org.h2.Driver"
+  SPRING_JPA_DATABASE_PLATFORM: "org.hibernate.dialect.H2Dialect"
+  SPRING_JPA_HIBERNATE_DDL_AUTO: "create"
+  SPRING_JPA_DEFER_DATASOURCE_INITIALIZATION: "true"

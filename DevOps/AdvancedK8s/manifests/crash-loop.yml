@@ -1,0 +1,13 @@
+# Intentionally broken pod to simulate a crash loop
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: crash-loop
+
+spec:
+  containers:
+    - name: crash-mcgee
+      image: alpine
+      command: ["false"]      # instantly execute "false" in container which will cause a crash
+  restartPolicy: Always

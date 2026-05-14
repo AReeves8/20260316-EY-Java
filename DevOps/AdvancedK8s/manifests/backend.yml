@@ -1,0 +1,84 @@
+# Deployment: instructions for running your containers
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: movies-api
+spec:
+  replicas: 2
+
+  # Rolling Update - replace old pods with new ones, gradually instead of all at once
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1         # the number of pods we're allowing to go over the limit during deployment
+      maxUnavailable: 0   # ensures there's always at least 1 pod available during deployment
+  selector:
+    matchLabels:
+      app: movies-api       # this should match to some template label
+  template:
+    metadata:
+      labels:
+        app: movies-api   
+    spec:
+      containers:
+        - name: movies-api    # name your container whatever you want
+          image: advancedk8s-backend:latest 
+          ports:
+            - containerPort: 8080
+          
+          # tell kubernetes to probe into the app to make sure it is live and ready
+          # k8s won't route traffic to a pod until the readiness check comes back positive
+          readinessProbe:
+            httpGet:
+              path: /api/v1/movies
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 10
+
+          # catch any hung processes in the container. restarts pod if there's a failure
+          livenessProbe:
+            httpGet:
+              path: /api/v1/movies
+              port: 8080
+            initialDelaySeconds: 60     # give more time since this can restart the pod on failure; avoid false positives.
+            periodSeconds: 30
+
+          # env variables from configmap - loads ALL variables from that file
+          envFrom:
+            - configMapRef:
+                name: movies-api-config
+            # - secretRef:                    # less preferred to avoid exposing unnecessary env vars into app
+            #     name: movies-api-secrets
+          
+          # pulling env vars from secrets
+          env:
+            - name: SPRING_DATASOURCE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: movies-api-secrets
+                  key: SPRING_DATASOURCE_USERNAME
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: movies-api-secrets
+                  key: SPRING_DATASOURCE_PASSWORD
+              
+            
+
+# --- is the yml document seperator. lets you have multiple documents in the same file. 
+# or you could have a backend-deployment.yml and a backend-service.yml
+---
+
+# Services: manage network rules. give your pods a stable ip address. 
+#   - act as load balancer to round-robin distribute connections across pods
+apiVersion: v1
+kind: Service
+metadata:
+  name: movies-api
+spec:
+  type: LoadBalancer    # provisions an external IP - makes it so the backend is reachable at localhost:8080
+  selector:
+    app: movies-api
+  ports:
+    - port: 8080        # port the service listens to externally
+      targetPort: 8080  # port the pod is listening on

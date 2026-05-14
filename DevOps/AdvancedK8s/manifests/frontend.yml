@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: movies-ui
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate   # Rolling Update - replace old pods with new ones, gradually instead of all at once
+    rollingUpdate:
+      maxSurge: 1         # the number of pods we're allowing to go over the limit during deployment
+      maxUnavailable: 0   # ensures there's always at least 1 pod available during deployment
+  selector:
+    matchLabels:
+      app: movies-ui       # this should match to some template label
+  template:
+    metadata:
+      labels:
+        app: movies-ui   
+    spec:
+      containers:
+        - name: movies-ui    # name your container whatever you want
+          image: advancedk8s-frontend:latest 
+          ports:
+            - containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 10
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: movies-ui
+spec:
+  type: LoadBalancer    # provisions an external IP 
+  selector:
+    app: movies-ui
+  ports:
+    - port: 4200          # port the service listens to externally
+      targetPort: 8080    # port the pod is listening on
